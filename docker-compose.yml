@@ -1,0 +1,26 @@
+version: '3'
+services:
+  backuppc:
+    image: elmenu/docker-backuppc:dev
+    build: .
+    ports:
+      - "8081:8080"
+    volumes:
+      - backuppc-etc:/etc/backuppc
+      - backuppc-home:/home/backuppc
+      - backuppc-data:/data/backuppc    #TODO: change to host path instead of volume
+    environment:
+      - TZ=Europe/Stockholm
+      - USE_SSL=true
+    hostname: backuppc
+    restart: "unless-stopped"
+
+volumes:
+  backuppc-etc:
+  backuppc-home:
+  backuppc-data:      #TODO: remove
+
+#TODO:
+# BACKUPPC_UUID (default: 1000) and BACKUPPC_GUID (default: 1000)
+#htpasswd. outside,in makefile/startscript/how? How to backup the backuppc-config?
+#SMTP config
